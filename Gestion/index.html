@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestor de Transporte Pesado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="CSS/main.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="app-header">
+    <nav class="navbar container">
+      <div class="navbar-brand">HeavyTrans</div>
+
+      <ul class="navbar-menu">
+        <li><button class="nav-item active" data-view="vehiculos">Vehículos</button></li>
+        <li><button class="nav-item" data-view="conductores">Conductores</button></li>
+        <li><button class="nav-item" data-view="cargas">Cargas</button></li>
+        <li><button class="nav-item" data-view="rutas">Rutas</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+
+    <!-- VEHÍCULOS -->
+    <section class="view active" id="vehiculos">
+      <h1>Vehículos</h1>
+
+      <div class="card">
+        <h2>Tipo de vehículo</h2>
+
+        <div class="grid-2">
+          <button class="vehicle-card">Camión rígido</button>
+          <button class="vehicle-card">Tractocamión</button>
+          <button class="vehicle-card">Doble remolque</button>
+        </div>
+
+        <p class="tip">Selecciona el tipo de vehículo para continuar.</p>
+      </div>
+    </section>
+
+    <!-- CONDUCTORES -->
+    <section class="view" id="conductores">
+      <h1>Conductores</h1>
+
+      <div class="card">
+        <label>Nombre del conductor</label>
+        <input type="text" placeholder="Ej. Juan Pérez" />
+
+        <label>Licencia</label>
+        <input type="text" placeholder="Tipo E" />
+
+        <button>Guardar conductor</button>
+      </div>
+    </section>
+
+    <!-- CARGAS -->
+    <section class="view" id="cargas">
+      <h1>Cargas</h1>
+
+      <div class="card">
+        <label>Descripción</label>
+        <input type="text" />
+
+        <label>Peso (toneladas)</label>
+        <input type="number" />
+
+        <button>Registrar carga</button>
+      </div>
+    </section>
+
+    <!-- RUTAS -->
+    <section class="view" id="rutas">
+      <h1>Rutas</h1>
+
+      <div class="card">
+        <label>Origen</label>
+        <input type="text" />
+
+        <label>Destino</label>
+        <input type="text" />
+
+        <button>Guardar ruta</button>
+      </div>
+    </section>
+    <section class="view active" id="vehiculos">
+      <h1>Vehículos</h1>
+
+      <!-- Formulario de registro -->
+      <div class="card">
+        <h2>Registrar vehículo</h2>
+
+        <label>Tipo de vehículo</label>
+        <select id="vehicle-type">
+          <option value="">Selecciona tipo</option>
+          <option value="Camión rígido">Camión rígido</option>
+          <option value="Tractocamión">Tractocamión</option>
+          <option value="Doble remolque">Doble remolque</option>
+        </select>
+
+        <label>Matrícula</label>
+        <input type="text" id="vehicle-plate" placeholder="ABC-123" />
+
+        <label>Capacidad (toneladas)</label>
+        <input type="number" id="vehicle-capacity" placeholder="10" />
+
+        <label>Estado</label>
+        <select id="vehicle-status">
+          <option value="Disponible">Disponible</option>
+          <option value="En viaje">En viaje</option>
+          <option value="Mantenimiento">Mantenimiento</option>
+        </select>
+
+        <button id="vehicle-save">Registrar vehículo</button>
+      </div>
+
+      <!-- Filtro -->
+      <div class="card flex-between">
+        <div>
+          <label>Filtrar por tipo</label>
+          <select id="filter-type">
+            <option value="">Todos</option>
+            <option value="Camión rígido">Camión rígido</option>
+            <option value="Tractocamión">Tractocamión</option>
+            <option value="Doble remolque">Doble remolque</option>
+          </select>
+        </div>
+        <div>
+          <label>Filtrar por estado</label>
+          <select id="filter-status">
+            <option value="">Todos</option>
+            <option value="Disponible">Disponible</option>
+            <option value="En viaje">En viaje</option>
+            <option value="Mantenimiento">Mantenimiento</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Lista de vehículos -->
+      <div class="card" id="vehicle-list"></div>
+    </section>
+
+    <section class="view" id="conductores">
+      <h1>Conductores</h1>
+
+      <!-- Formulario de registro -->
+      <div class="card">
+        <label>Nombre del conductor</label>
+        <input type="text" placeholder="Ej. Juan Pérez" id="driver-name" />
+
+        <label>Licencia</label>
+        <select id="driver-license">
+          <option value="">Selecciona tipo</option>
+          <option value="B">B - Vehículos ligeros</option>
+          <option value="C">C - Camiones medianos</option>
+          <option value="D">D - Tractocamiones</option>
+          <option value="E">E - Doble remolque</option>
+        </select>
+
+        <button id="driver-save">Guardar conductor</button>
+      </div>
+
+      <!-- Lista de conductores -->
+      <div class="card" id="driver-list"></div>
+
+      <!-- Asignar conductor a vehículo/ruta -->
+      <div class="card">
+        <h2>Asignar conductor</h2>
+
+        <label>Conductor</label>
+        <select id="assign-driver">
+          <option value="">Selecciona conductor</option>
+        </select>
+
+        <label>Vehículo</label>
+        <select id="assign-vehicle">
+          <option value="">Selecciona vehículo</option>
+        </select>
+
+        <label>Ruta</label>
+        <select id="assign-route">
+          <option value="">Selecciona ruta</option>
+        </select>
+
+        <button id="assign-save">Asignar</button>
+      </div>
+
+      <!-- Historial de viajes -->
+      <div class="card">
+        <h2>Historial de viajes</h2>
+        <div id="driver-history" class="mt-2"></div>
+      </div>
+    </section>
+    <section class="view" id="cargas">
+      <h1>Cargas</h1>
+
+      <!-- Formulario de registro de carga -->
+      <div class="card">
+        <label>Descripción</label>
+        <input type="text" id="cargo-desc" placeholder="Ej. Contenedor de alimentos" />
+
+        <label>Peso (toneladas)</label>
+        <input type="number" id="cargo-weight" placeholder="10" />
+
+        <label>Categoría</label>
+        <select id="cargo-category">
+          <option value="">Selecciona categoría</option>
+          <option value="General">General</option>
+          <option value="Perecedera">Perecedera</option>
+          <option value="Peligrosa">Peligrosa</option>
+        </select>
+
+        <button id="cargo-save">Registrar carga</button>
+      </div>
+
+      <!-- Asignación de carga -->
+      <div class="card">
+        <h2>Asignar carga</h2>
+
+        <label>Carga</label>
+        <select id="assign-cargo">
+          <option value="">Selecciona carga</option>
+        </select>
+
+        <label>Vehículo</label>
+        <select id="assign-cargo-vehicle">
+          <option value="">Selecciona vehículo</option>
+        </select>
+
+        <label>Ruta</label>
+        <select id="assign-cargo-route">
+          <option value="">Selecciona ruta</option>
+        </select>
+
+        <button id="assign-cargo-save">Asignar</button>
+      </div>
+
+      <!-- Lista de cargas -->
+      <div class="card" id="cargo-list"></div>
+    </section>
+    <section class="view" id="rutas">
+      <h1>Rutas</h1>
+    
+      <!-- Formulario de registro de ruta -->
+      <div class="card">
+        <label>Origen</label>
+        <input type="text" id="route-origin" placeholder="Ej. Bogotá" />
+    
+        <label>Destino</label>
+        <input type="text" id="route-destination" placeholder="Ej. Medellín" />
+    
+        <button id="route-save">Guardar ruta</button>
+      </div>
+    
+      <!-- Lista de rutas -->
+      <div class="card" id="route-list"></div>
+    
+      <!-- Mapa interactivo -->
+      <div class="card">
+        <h2>Mapa de Rutas</h2>
+        <div id="map" style="height: 400px; border-radius:12px;"></div>
+      </div>
+    </section>
+    
+    <section class="view" id="dashboard">
+      <h1>Dashboard</h1>
+    
+      <!-- Cards de resumen -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Vehículos disponibles</div>
+          <div class="stat-value" id="stat-vehiculos-disponibles">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Vehículos en viaje</div>
+          <div class="stat-value" id="stat-vehiculos-en-viaje">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Conductores activos</div>
+          <div class="stat-value" id="stat-conductores-activos">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cargas pendientes</div>
+          <div class="stat-value" id="stat-cargas-pendientes">0</div>
+        </div>
+      </div>
+    
+      <!-- Tablas dinámicas -->
+      <div class="card">
+        <h2>Vehículos</h2>
+        <div id="dashboard-vehiculos"></div>
+      </div>
+    
+      <div class="card">
+        <h2>Cargas</h2>
+        <div id="dashboard-cargas"></div>
+      </div>
+      <!DOCTYPE html>
+      <html lang="es">
+      
+      <head>
+        <meta charset="UTF-8" />
+        <title>Gestor de Transporte Pesado</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="CSS/main.css" />
+      </head>
+      
+      <body>
+      
+        <!-- NAVBAR -->
+        <header class="app-header">
+          <nav class="navbar container">
+            <div class="navbar-brand">HeavyTrans</div>
+            <ul class="navbar-menu">
+              <li><button class="nav-item active" data-view="vehiculos">Vehículos</button></li>
+              <li><button class="nav-item" data-view="conductores">Conductores</button></li>
+              <li><button class="nav-item" data-view="cargas">Cargas</button></li>
+              <li><button class="nav-item" data-view="rutas">Rutas</button></li>
+              <li><button class="nav-item" data-view="dashboard">Dashboard</button></li>
+            </ul>
+          </nav>
+        </header>
+      
+        <!-- CONTENIDO -->
+        <main class="container">
+      
+          <!-- VEHÍCULOS -->
+          <section class="view active" id="vehiculos">
+            <h1>Vehículos</h1>
+      
+            <!-- Selección de tipo de vehículo -->
+            <div class="card">
+              <h2>Tipo de vehículo</h2>
+              <div class="grid-2">
+                <button class="vehicle-card">Camión rígido</button>
+                <button class="vehicle-card">Tractocamión</button>
+                <button class="vehicle-card">Doble remolque</button>
+              </div>
+              <p class="tip">Selecciona el tipo de vehículo para continuar.</p>
+            </div>
+      
+            <!-- Registro de vehículo -->
+            <div class="card">
+              <h2>Registrar vehículo</h2>
+              <label>Tipo de vehículo</label>
+              <select id="vehicle-type">
+                <option value="">Selecciona tipo</option>
+                <option value="Camión rígido">Camión rígido</option>
+                <option value="Tractocamión">Tractocamión</option>
+                <option value="Doble remolque">Doble remolque</option>
+              </select>
+      
+              <label>Matrícula</label>
+              <input type="text" id="vehicle-plate" placeholder="ABC-123" />
+      
+              <label>Capacidad (toneladas)</label>
+              <input type="number" id="vehicle-capacity" placeholder="10" />
+      
+              <label>Estado</label>
+              <select id="vehicle-status">
+                <option value="Disponible">Disponible</option>
+                <option value="En viaje">En viaje</option>
+                <option value="Mantenimiento">Mantenimiento</option>
+              </select>
+      
+              <button id="vehicle-save">Registrar vehículo</button>
+            </div>
+      
+            <!-- Filtros -->
+            <div class="card flex-between">
+              <div>
+                <label>Filtrar por tipo</label>
+                <select id="filter-type">
+                  <option value="">Todos</option>
+                  <option value="Camión rígido">Camión rígido</option>
+                  <option value="Tractocamión">Tractocamión</option>
+                  <option value="Doble remolque">Doble remolque</option>
+                </select>
+              </div>
+              <div>
+                <label>Filtrar por estado</label>
+                <select id="filter-status">
+                  <option value="">Todos</option>
+                  <option value="Disponible">Disponible</option>
+                  <option value="En viaje">En viaje</option>
+                  <option value="Mantenimiento">Mantenimiento</option>
+                </select>
+              </div>
+            </div>
+      
+            <!-- Lista de vehículos -->
+            <div class="card" id="vehicle-list"></div>
+          </section>
+      
+          <!-- CONDUCTORES -->
+          <section class="view" id="conductores">
+            <h1>Conductores</h1>
+      
+            <!-- Registro de conductor -->
+            <div class="card">
+              <label>Nombre del conductor</label>
+              <input type="text" placeholder="Ej. Juan Pérez" id="driver-name" />
+      
+              <label>Licencia</label>
+              <select id="driver-license">
+                <option value="">Selecciona tipo</option>
+                <option value="B">B - Vehículos ligeros</option>
+                <option value="C">C - Camiones medianos</option>
+                <option value="D">D - Tractocamiones</option>
+                <option value="E">E - Doble remolque</option>
+              </select>
+      
+              <button id="driver-save">Guardar conductor</button>
+            </div>
+      
+            <!-- Lista de conductores -->
+            <div class="card" id="driver-list"></div>
+      
+            <!-- Asignaciones -->
+            <div class="card">
+              <h2>Asignar conductor</h2>
+              <label>Conductor</label>
+              <select id="assign-driver"><option value="">Selecciona conductor</option></select>
+              <label>Vehículo</label>
+              <select id="assign-vehicle"><option value="">Selecciona vehículo</option></select>
+              <label>Ruta</label>
+              <select id="assign-route"><option value="">Selecciona ruta</option></select>
+              <button id="assign-save">Asignar</button>
+            </div>
+      
+            <!-- Historial -->
+            <div class="card">
+              <h2>Historial de viajes</h2>
+              <div id="driver-history" class="mt-2"></div>
+            </div>
+          </section>
+      
+          <!-- CARGAS -->
+          <section class="view" id="cargas">
+            <h1>Cargas</h1>
+      
+            <!-- Registro de carga -->
+            <div class="card">
+              <label>Descripción</label>
+              <input type="text" id="cargo-desc" placeholder="Ej. Contenedor de alimentos" />
+      
+              <label>Peso (toneladas)</label>
+              <input type="number" id="cargo-weight" placeholder="10" />
+      
+              <label>Categoría</label>
+              <select id="cargo-category">
+                <option value="">Selecciona categoría</option>
+                <option value="General">General</option>
+                <option value="Perecedera">Perecedera</option>
+                <option value="Peligrosa">Peligrosa</option>
+              </select>
+      
+              <button id="cargo-save">Registrar carga</button>
+            </div>
+      
+            <!-- Asignación de carga -->
+            <div class="card">
+              <h2>Asignar carga</h2>
+              <label>Carga</label>
+              <select id="assign-cargo"><option value="">Selecciona carga</option></select>
+              <label>Vehículo</label>
+              <select id="assign-cargo-vehicle"><option value="">Selecciona vehículo</option></select>
+              <label>Ruta</label>
+              <select id="assign-cargo-route"><option value="">Selecciona ruta</option></select>
+              <button id="assign-cargo-save">Asignar</button>
+            </div>
+      
+            <!-- Lista de cargas -->
+            <div class="card" id="cargo-list"></div>
+          </section>
+      
+          <!-- RUTAS -->
+          <section class="view" id="rutas">
+            <h1>Rutas</h1>
+      
+            <!-- Registro de ruta -->
+            <div class="card">
+              <label>Origen</label>
+              <input type="text" id="route-origin" placeholder="Ej. Bogotá" />
+              <label>Destino</label>
+              <input type="text" id="route-destination" placeholder="Ej. Medellín" />
+              <button id="route-save">Guardar ruta</button>
+            </div>
+      
+            <!-- Lista de rutas -->
+            <div class="card" id="route-list"></div>
+      
+            <!-- Mapa -->
+            <div class="card">
+              <h2>Mapa de Rutas</h2>
+              <div id="map" style="height: 400px; border-radius:12px;"></div>
+            </div>
+          </section>
+      
+          <!-- DASHBOARD -->
+          <section class="view" id="dashboard">
+            <h1>Dashboard</h1>
+      
+            <!-- Cards de resumen -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">Vehículos disponibles</div>
+                <div class="stat-value" id="stat-vehiculos-disponibles">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Vehículos en viaje</div>
+                <div class="stat-value" id="stat-vehiculos-en-viaje">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Conductores activos</div>
+                <div class="stat-value" id="stat-conductores-activos">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Cargas pendientes</div>
+                <div class="stat-value" id="stat-cargas-pendientes">0</div>
+              </div>
+            </div>
+      
+            <!-- Tablas dinámicas -->
+            <div class="card">
+              <h2>Vehículos</h2>
+              <div id="dashboard-vehiculos"></div>
+            </div>
+      
+            <div class="card">
+              <h2>Cargas</h2>
+              <div id="dashboard-cargas"></div>
+            </div>
+          </section>
+      
+        </main>
+      
+        <script src="/JS/main.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap"></script>
+      </body>
+      
+      </html>
+          
+
+  </main>
+
+  <script src="/JS/main.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap"></script>
+
+</body>
+
+</html>
